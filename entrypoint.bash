@@ -2,7 +2,8 @@
 
 BASE=${1}
 EFFECTOR=${2}
-EXTENSION=${3}
+TRANSFORM=${3:-"transform6d"}
+EXTENSION=${4:-"."}
 
 # Generate inverse kinematics files
 cp /output/robot.urdf robot.urdf
@@ -16,7 +17,7 @@ cat <<EOT >> robot.xml
   </Manipulator>
 </robot>
 EOT
-openrave.py --database inversekinematics --robot=robot.xml --iktype=transform6d --iktests=100
+openrave.py --database inversekinematics --robot=robot.xml --iktype=${TRANSFORM} --iktests=100
 
 # Grap Python bind and `ikfast` generated files
 cp /src/* /output
